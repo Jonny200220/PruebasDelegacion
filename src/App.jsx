@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Tabla from './components/Table'
 import Table2 from './components/Table2'
+
 // import './App.css'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Tabla/>
       <p>Separacion</p>
       <Table2/>
+
     </>
   )
 }
