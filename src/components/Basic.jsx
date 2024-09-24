@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useMemo } from 'react';
 import {
   MaterialReactTable,
@@ -66,6 +67,9 @@ const data = [
 ];
 
 const BasicExample = () => {
+
+  const [validationErrors, setValidationErrors] = useState({});
+  
   //should be memoized or stable
   const columns = useMemo(
     () => [
@@ -73,30 +77,71 @@ const BasicExample = () => {
         accessorKey: 'name.id',
         header: 'Id',
         enableEditing: false,
-        size: 150,
+        size: 80,
       },
       {
         accessorKey: 'name.firstName', //access nested data with dot notation
         header: 'First Name',
         size: 150,
+        muiEditTextFieldProps: {
+          required: true,
+          error: !!validationErrors?.firstName,
+          helperText: validationErrors?.firstName,
+          //remove any previous validation errors when user focuses on the input
+          onFocus: () =>
+            setValidationErrors({
+              ...validationErrors,
+              firstName: undefined,
+            }),
+          //optionally add validation checking for onBlur or onChange
+        },
       },
       {
         accessorKey: 'name.lastName',
         header: 'Last Name',
         size: 150,
+        muiEditTextFieldProps: {
+          required: true,
+          error: !!validationErrors?.lastName,
+          helperText: validationErrors?.lastName,
+          //remove any previous validation errors when user focuses on the input
+          onFocus: () =>
+            setValidationErrors({
+              ...validationErrors,
+              lastName: undefined,
+            }),
+        },
       },
       {
         accessorKey: 'email', //normal accessorKey
         header: 'Email',
         size: 200,
+        muiEditTextFieldProps: {
+          type: 'email',
+          required: true,
+          error: !!validationErrors?.email,
+          helperText: validationErrors?.email,
+          //remove any previous validation errors when user focuses on the input
+          onFocus: () =>
+            setValidationErrors({
+              ...validationErrors,
+              email: undefined,
+            }),
+        },
+
       },
       {
         accessorKey: 'state',
         header: 'State',
         size: 150,
+        muiEditTextFieldProps: {
+          select: true,
+          error: !!validationErrors?.state,
+          helperText: validationErrors?.state,
+        },
       },
     ],
-    [],
+    [validationErrors],
   );
 
   const table = useMaterialReactTable({
