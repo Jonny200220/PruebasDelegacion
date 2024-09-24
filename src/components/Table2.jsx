@@ -8,8 +8,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-// import { usStates } from ''
-// import { fakeData, usStates } from './Data';
+// import {BasicExample, data} from './Data'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 

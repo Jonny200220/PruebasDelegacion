@@ -11,11 +11,11 @@ function App() {
   return (
     <>
       <p>MI TABLA</p>
-      <Tabla/>
+      <BasicExample/>
       <p>Separacion</p>
       {/* <Table2/> */}
       <p>Separacion</p>
-      <BasicExample/>
+      <Tabla/>
     </>
   )
 }
