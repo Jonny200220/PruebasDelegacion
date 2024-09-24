@@ -208,7 +208,7 @@ function useCreateUser() {
   return useMutation({
     mutationFn: async (user) => {
       //send api update request here
-      await new Promise((resolve) => setTimeout(resolve, 1000)); //fake api call
+      await new Promise((resolve) => setTimeout(resolve, 1000)); alert("Creando DAtos")
       return Promise.resolve();
     },
     //client side optimistic update
@@ -235,7 +235,7 @@ function useGetUsers() {
     queryKey: ['users'],
     queryFn: async () => {
       //send api request here
-      await new Promise((resolve) => setTimeout(resolve, 1000)); //fake api call
+      await new Promise((resolve) => setTimeout(resolve, 1000)); alert("Obteniendo DAtos")
       return Promise.resolve(fakeData);
     },
     refetchOnWindowFocus: false,
@@ -248,7 +248,7 @@ function useUpdateUser() {
   return useMutation({
     mutationFn: async (user) => {
       //send api update request here
-      await new Promise((resolve) => setTimeout(resolve, 1000)); //fake api call
+      await new Promise((resolve) => setTimeout(resolve, 1000)); alert("Actualizando DAtos")
       return Promise.resolve();
     },
     //client side optimistic update
@@ -269,7 +269,7 @@ function useDeleteUser() {
   return useMutation({
     mutationFn: async (userId) => {
       //send api update request here
-      await new Promise((resolve) => setTimeout(resolve, 1000)); //fake api call
+      await new Promise((resolve) => setTimeout(resolve, 1000)); alert("Eliminando DAtos")
       return Promise.resolve();
     },
     //client side optimistic update
