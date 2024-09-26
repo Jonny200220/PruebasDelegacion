@@ -1,14 +1,35 @@
-import { useState } from 'react'
-import ExampleWithProviders from './components/Table'
-// import { Table } from '@mui/material'
+import Table  from './components/Table';
+// import FilteringExample from './components/GlobalFiltering';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-function App() {
-  return (
+export default function App() {
+
+  function editFunction(){
+    alert('editFunction');
+  };
+
+
+  function createFunction(){
+    alert('createFunction');
+  };
+
+
+  function deleteFunction(){
+    alert('deleteFunction');
+  };
+
+
+  function getFunction(){
+    alert('getFunction');
+  };
+  
+const queryClient = new QueryClient();
+  return(
     <>
-      <p>MI TABLA</p>
-      <ExampleWithProviders/>
+  <QueryClientProvider client={queryClient}>
+    <Table editFunction={editFunction} createFunction={createFunction} deleteFunction={deleteFunction} getFunction={getFunction} />
+  </QueryClientProvider>
+      {/* <FilteringExample/> */}
     </>
-  )
+  );
 }
-
-export default App

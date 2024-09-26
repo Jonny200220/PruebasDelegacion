@@ -69,6 +69,6 @@ export const datosFalsos = [
         email: 'yara.hernandez@correo.com',
         state: 'Nuevo Leon',
       },
-    // ... más datos
+    
   ];
   

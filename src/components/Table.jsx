@@ -16,7 +16,7 @@ import { datosFalsos } from './Datas';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const Example = () => {
+ export default function Table({createFunction, editFunction, getFunction, deleteFunction}){
   const [validationErrors, setValidationErrors] = useState({});
 
   const columns = useMemo(
@@ -26,10 +26,11 @@ const Example = () => {
         header: 'Id',
         enableEditing: false,
         size: 80,
+        muiFilterTextFieldProps: { placeholder: 'Filtrar por ID' },
       },
       {
         accessorKey: 'firstName',
-        header: 'First Name',
+        header: 'Nombre',
         muiEditTextFieldProps: {
           required: true,
           error: !!validationErrors?.firstName,
@@ -40,10 +41,11 @@ const Example = () => {
               firstName: undefined,
             }),
         },
+        muiFilterTextFieldProps: { placeholder: 'Filtrar por nombre' },
       },
       {
         accessorKey: 'lastName',
-        header: 'Last Name',
+        header: 'Apellido',
         muiEditTextFieldProps: {
           required: true,
           error: !!validationErrors?.lastName,
@@ -54,6 +56,7 @@ const Example = () => {
               lastName: undefined,
             }),
         },
+        muiFilterTextFieldProps: { placeholder: 'Filtrar por apellido' },
       },
       {
         accessorKey: 'email',
@@ -69,6 +72,7 @@ const Example = () => {
               email: undefined,
             }),
         },
+        muiFilterTextFieldProps: { placeholder: 'Filtrar por Email' },
       },
     ],
     [validationErrors]
@@ -110,7 +114,7 @@ const Example = () => {
   };
 
   const openDeleteConfirmModal = (row) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
+    if (window.confirm('¿estas seguro de eliminar este usuario?')) {
       deleteUser(row.original.id);
     }
   };
@@ -128,23 +132,25 @@ const Example = () => {
           children: 'Error loading data',
         }
       : undefined,
+      
     muiTableContainerProps: {
       sx: {
         minHeight: '500px',
       },
     },
+    muiSearchTextFieldProps : {placeholder: 'Buscar', },
     onCreatingRowCancel: () => setValidationErrors({}),
     onCreatingRowSave: handleCreateUser,
     onEditingRowCancel: () => setValidationErrors({}),
     onEditingRowSave: handleSaveUser,
     renderRowActions: ({ row, table }) => (
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip title="Edit">
+      <Box sx={{ display: 'flex', gap: '1rem',  }}>
+        <Tooltip title="Editar">
           <IconButton onClick={() => table.setEditingRow(row)}>
             <EditIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Delete">
+        <Tooltip title="Eliminar">
           <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
             <DeleteIcon />
           </IconButton>
@@ -158,20 +164,30 @@ const Example = () => {
           table.setCreatingRow(true);
         }}
       >
-        Create New User
+        Crear Nuevo Usuario
       </Button>
     ),
   });
 
-  return <MaterialReactTable table={table} />;
-};
+  const validateRequired = (value) => !!value.length;
+const validateEmail = (email) => true;
+
+function validateUser(user) {
+  return {
+    firstName: !validateRequired(user.firstName)
+      ? 'El nombre es obligatorio'
+      : '',
+    lastName: !validateRequired(user.lastName) ? 'El apellido es obligatorio' : '',
+    email: !validateEmail(user.email) ? 'El formato Email es incorrecto' : '',
+  };
+}
 
 function useCreateUser() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (user) => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert('Creando Usuario')
+      createFunction()
       return Promise.resolve();
     },
     onMutate: (newUserInfo) => {
@@ -191,7 +207,7 @@ function useGetUsers() {
     queryKey: ['users'],
     queryFn: async () => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert('Obteniendo Usuarios')
+      getFunction();
       return Promise.resolve(datosFalsos);
     },
     refetchOnWindowFocus: false,
@@ -203,7 +219,7 @@ function useUpdateUser() {
   return useMutation({
     mutationFn: async (user) => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert('Actualizando Usuario')
+      editFunction();
       return Promise.resolve();
     },
     onMutate: (newUserInfo) => {
@@ -221,7 +237,7 @@ function useDeleteUser() {
   return useMutation({
     mutationFn: async (userId) => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert('Eliminando Usuario')
+      deleteFunction();
       return Promise.resolve();
     },
     onMutate: (userId) => {
@@ -232,31 +248,6 @@ function useDeleteUser() {
   });
 }
 
-const queryClient = new QueryClient();
+  return <MaterialReactTable table={table} />;
 
-const ExampleWithProviders = () => (
-  <QueryClientProvider client={queryClient}>
-    <Example />
-  </QueryClientProvider>
-);
-
-export default ExampleWithProviders;
-
-const validateRequired = (value) => !!value.length;
-const validateEmail = (email) =>
-  !!email.length &&
-  email
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-
-function validateUser(user) {
-  return {
-    firstName: !validateRequired(user.firstName)
-      ? 'First Name is Required'
-      : '',
-    lastName: !validateRequired(user.lastName) ? 'Last Name is Required' : '',
-    email: !validateEmail(user.email) ? 'Incorrect Email Format' : '',
-  };
-}
+};
