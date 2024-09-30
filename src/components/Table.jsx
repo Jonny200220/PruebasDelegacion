@@ -7,8 +7,8 @@ import {MRT_Localization_ES} from 'material-react-table/locales/es'
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 
 import {
-  // QueryClient,
-  // QueryClientProvider,
+  QueryClient,
+  QueryClientProvider,
   useMutation,
   useQuery,
   useQueryClient,
@@ -142,7 +142,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
         ...MRT_Localization_ES, // Aplica la localización española
         pagination: {
           ...MRT_Localization_ES.pagination, // Mantén las traducciones de paginación en español
-          // labelRowsPerPage: 'Columnas por página', // Personaliza este texto
         },
       },
     muiSearchTextFieldProps : {placeholder: 'Buscar', },
