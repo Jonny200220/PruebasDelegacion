@@ -3,11 +3,12 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
+import {MRT_Localization_ES} from 'material-react-table/locales/es'
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 
 import {
-  QueryClient,
-  QueryClientProvider,
+  // QueryClient,
+  // QueryClientProvider,
   useMutation,
   useQuery,
   useQueryClient,
@@ -72,7 +73,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
               email: undefined,
             }),
         },
-        muiFilterTextFieldProps: { placeholder: 'Filtrar por Email' },
+        // muiFilterTextFieldProps: { placeholder: 'Filtrar por Email' },
       },
     ],
     [validationErrors]
@@ -132,12 +133,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
           children: 'Error loading data',
         }
       : undefined,
-      
-    muiTableContainerProps: {
-      sx: {
-        minHeight: '500px',
+      muiTableContainerProps: {
+        sx: {
+          minHeight: '500px',
+        },
       },
-    },
+      localization: {
+        ...MRT_Localization_ES, // Aplica la localización española
+        pagination: {
+          ...MRT_Localization_ES.pagination, // Mantén las traducciones de paginación en español
+          // labelRowsPerPage: 'Columnas por página', // Personaliza este texto
+        },
+      },
     muiSearchTextFieldProps : {placeholder: 'Buscar', },
     onCreatingRowCancel: () => setValidationErrors({}),
     onCreatingRowSave: handleCreateUser,
