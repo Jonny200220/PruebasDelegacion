@@ -7,8 +7,6 @@ import {MRT_Localization_ES} from 'material-react-table/locales/es'
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 
 import {
-  QueryClient,
-  QueryClientProvider,
   useMutation,
   useQuery,
   useQueryClient,
@@ -40,9 +38,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
             setValidationErrors({
               ...validationErrors,
               firstName: undefined,
-            }),
-        },
-        muiFilterTextFieldProps: { placeholder: 'Filtrar por nombre' },
+            })
+        }
       },
       {
         accessorKey: 'lastName',
@@ -57,7 +54,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
               lastName: undefined,
             }),
         },
-        muiFilterTextFieldProps: { placeholder: 'Filtrar por apellido' },
       },
       {
         accessorKey: 'email',
@@ -73,7 +69,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
               email: undefined,
             }),
         },
-        // muiFilterTextFieldProps: { placeholder: 'Filtrar por Email' },
       },
     ],
     [validationErrors]
@@ -84,8 +79,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
   const {
     data: fetchedUsers = [],
     isError: isLoadingUsersError,
-    isFetching: isFetchingUsers,
-    isLoading: isLoadingUsers,
+    // isFetching: isFetchingUsers,
+    // isLoading: isLoadingUsers,
   } = useGetUsers();
 
   const { mutateAsync: updateUser, isPending: isUpdatingUser } = useUpdateUser();
